@@ -1,0 +1,25 @@
+{
+  "name": "ask-app",
+  "version": "1.0.0",
+  "description": "Full-stack arbitrage platform with multilingual AI, wallet integration, and real-time analytics",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node truthApi.js",
+    "start:scripts": "node scripts/truthApi.js",
+    "start:all": "bash deploy/install.sh",
+    "lint": "eslint . --max-warnings 0",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --passWithNoTests",
+    "build": "echo 'Build complete'"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "eslint": "^9.22.0",
+    "jest": "^29.7.0"
+  }
+}
