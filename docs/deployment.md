@@ -33,7 +33,7 @@ See [env-vars.md](env-vars.md) for all required environment variables.
 |---|---|---|
 | Main API | 3000 | `node truthApi.js` |
 | Code-Gen API | 3005 | `node scripts/truthApi.js` |
-| AI Service | 8001 | `uvicorn adaptive_learning:router --host 0.0.0.0 --port 8001` |
+| AI Service | 8001 | `uvicorn backend.adaptive_learning:router --host 0.0.0.0 --port 8001` |
 
 ## Production Deployment
 

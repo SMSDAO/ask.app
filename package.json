@@ -11,7 +11,7 @@
     "start:scripts": "node scripts/truthApi.js",
     "start:all": "bash deploy/install.sh",
     "lint": "eslint . --max-warnings 0",
-    "test": "node --experimental-vm-modules node_modules/.bin/jest --passWithNoTests",
+    "test": "jest --passWithNoTests",
     "build": "echo 'Build complete'"
   },
   "dependencies": {
