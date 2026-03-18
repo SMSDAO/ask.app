@@ -33,16 +33,9 @@ See [env-vars.md](env-vars.md) for all required environment variables.
 |---|---|---|
 | Main API | 3000 | `node truthApi.js` |
 | Code-Gen API | 3005 | `node scripts/truthApi.js` |
-| AI Service | 8001 | `uvicorn backend.adaptive_learning:router --host 0.0.0.0 --port 8001` |
+| AI Service | 8001 | `cd backend && uvicorn adaptive_learning:router --host 0.0.0.0 --port 8001` |
 
 ## Production Deployment
-
-### Docker (Recommended)
-
-```bash
-# Build and start all services
-docker compose up -d
-```
 
 ### Manual
 
@@ -56,8 +49,8 @@ pip install fastapi uvicorn
 # Start services with process manager (e.g., PM2)
 pm2 start truthApi.js --name "ask-api"
 pm2 start "node scripts/truthApi.js" --name "code-gen"
-pm2 start "uvicorn backend.adaptive_learning:router --host 0.0.0.0 --port 8001" \
-  --name "ai-service" --interpreter python3
+pm2 start "uvicorn adaptive_learning:router --host 0.0.0.0 --port 8001" \
+  --name "ai-service" --interpreter python3 --cwd backend
 ```
 
 ## CI/CD
@@ -69,10 +62,4 @@ GitHub Actions workflows handle:
 
 ## Database
 
-```bash
-# Run migrations (when database layer is configured)
-npm run db:migrate
-
-# Seed initial data
-npm run db:seed
-```
+Database migrations and seeding tooling are not yet implemented. Update this section once a database layer (e.g., Prisma, Knex) is added and the corresponding scripts are defined in `package.json`.

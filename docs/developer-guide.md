@@ -24,7 +24,7 @@ cp .env.example .env
 # 5. Start services
 node truthApi.js            # Main API on :3000
 node scripts/truthApi.js    # Code-gen API on :3005
-uvicorn backend.adaptive_learning:router --port 8001  # AI service
+uvicorn adaptive_learning:router --port 8001  # AI service (run from backend/)
 ```
 
 ## Project Structure

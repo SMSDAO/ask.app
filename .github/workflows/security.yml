@@ -47,28 +47,7 @@ jobs:
           fi
           echo "No committed .env files found."
 
-      - name: Scan for high-signal secret patterns
-        run: |
-          # Patterns: private keys, tokens, passwords, API keys in tracked files
-          PATTERNS=(
-            'private[_-]?key\s*[:=]\s*["\x27][^"'\'']{8,}'
-            'api[_-]?key\s*[:=]\s*["\x27][^"'\'']{8,}'
-            'secret\s*[:=]\s*["\x27][^"'\'']{8,}'
-            'password\s*[:=]\s*["\x27][^"'\'']{8,}'
-            'AKIA[0-9A-Z]{16}'
-            'ghp_[0-9A-Za-z]{36}'
-            'glpat-[0-9A-Za-z\-]{20}'
-            'sk-[A-Za-z0-9]{32,}'
-          )
-          FOUND=0
-          for pattern in "${PATTERNS[@]}"; do
-            if git grep -liE "$pattern" -- ':!node_modules' ':!*.lock' 2>/dev/null; then
-              echo "WARNING: Possible secret matching pattern: $pattern"
-              FOUND=1
-            fi
-          done
-          if [ "$FOUND" -eq 1 ]; then
-            echo "ERROR: Possible secrets detected — review files listed above."
-            exit 1
-          fi
-          echo "Secret pattern scan passed."
+      - name: Scan for secrets with Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

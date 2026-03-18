@@ -8,7 +8,7 @@ ask.app is a full-stack arbitrage platform built on a modern Node.js/Express bac
 
 | Layer | Technology |
 |---|---|
-| Frontend | Next.js (React), Tailwind CSS, Neo-Glow Design System |
+| Frontend | Next.js (React), Tailwind CSS, Neo-Glow Design System (packaged in `ask.app.zip`) |
 | Backend API | Node.js / Express |
 | AI Service | Python / FastAPI |
 | Blockchain | Base / Sepolia via public RPC |
