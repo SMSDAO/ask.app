@@ -1,0 +1,53 @@
+name: Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  dependency-audit:
+    runs-on: ubuntu-latest
+    name: Dependency Audit
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - run: npm ci
+
+      - name: Run npm audit
+        run: npm audit --audit-level=high
+
+  secret-scan:
+    runs-on: ubuntu-latest
+    name: Secret Scanning
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for committed .env files
+        run: |
+          if git ls-files | grep -E '(^|/)\.env(\.|$)' | grep -v '\.env\.example$'; then
+            echo "ERROR: .env files should not be committed"
+            exit 1
+          fi
+          echo "No committed .env files found."
+
+      - name: Scan for secrets with Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
